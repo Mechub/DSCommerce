@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "tb_user")
@@ -20,7 +21,10 @@ public class User {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+    
     private String phone;
     private LocalDate birthDate;
     private String password;
@@ -92,5 +96,5 @@ public class User {
         return orders;
     }
 
-    
+
 }
