@@ -3,7 +3,7 @@ package com.devsuperior.dscommerce.dto;
 import com.devsuperior.dscommerce.entities.Product;
 
 public class ProductDTO {
-    
+
     private Long id;
     private String name;
     private String description;
@@ -49,5 +49,5 @@ public class ProductDTO {
     public String getImgUrl() {
         return imgUrl;
     }
- 
+
 }
