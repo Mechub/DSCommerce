@@ -1,6 +1,7 @@
 package com.devsuperior.dscommerce.controllers;
 
 import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,9 +39,8 @@ public class ProductController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
-
+        
     }
-
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id,@RequestBody ProductDTO dto ){
        dto = service.update(id, dto);
@@ -48,10 +48,8 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
       service.delete(id);
        return ResponseEntity.noContent().build(); 
     }
-
-
 }

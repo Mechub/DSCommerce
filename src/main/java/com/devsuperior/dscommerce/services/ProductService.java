@@ -5,27 +5,34 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
+import com.devsuperior.dscommerce.services.exception.ResourceNotFoundException;
+
 @Service
 public class ProductService {
    
   @Autowired
   private ProductRepository repository;  
+
   @Transactional(readOnly = true)
   public ProductDTO findById(Long id){
-    Product product = repository.findById(id).get();
+    Product product = repository.findById(id).orElseThrow(
+        () -> new ResourceNotFoundException("Rercurso não encontrado"));
     return new ProductDTO(product);     
   }
+
   @Transactional(readOnly = true)
   public Page<ProductDTO> findAll(Pageable pageable){
     Page<Product> result = repository.findAll(pageable);
     return result.map(x -> new ProductDTO(x));
   }
+
   @Transactional
   public ProductDTO insert(ProductDTO dto){
-
+    
     Product entity = new Product();
     copyDtoEntity(dto, entity);
     entity = repository.save(entity);
@@ -35,7 +42,7 @@ public class ProductService {
 
   @Transactional
   public ProductDTO update(Long id, ProductDTO dto){
-
+    
     Product entity = repository.getReferenceById(id);
     copyDtoEntity(dto, entity);
     entity = repository.save(entity);
